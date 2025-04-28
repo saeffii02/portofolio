@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Saeffi'i</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#3b82f6',secondary:'#10b981'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .typing-effect::after {
+            content: "|";
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            background-color: #e5e7eb;
+            overflow: hidden;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease-in-out;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: 0.75rem;
+            top: 0;
+            bottom: -2rem;
+            width: 2px;
+            background-color: #e5e7eb;
+        }
+        
+        .timeline-item:last-child::before {
+            bottom: 0;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 0.25rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            background-color: #3b82f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            z-index: 1;
+        }
+        
+        .card-project {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card-project:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .social-icon {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-4px);
+            color: #3b82f6;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 10;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e5e7eb;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .custom-checkbox {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            height: 20px;
+            width: 20px;
+            background-color: #fff;
+            border: 2px solid #e5e7eb;
+            border-radius: 4px;
+            position: relative;
+        }
+        
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e5e7eb;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #3b82f6;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header & Navigation -->
+    <header id="home" class="relative">
+        <nav class="fixed top-0 w-full bg-white shadow-md z-50">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <a href="#" class="font-semibold text-2xl tracking-wide text-primary uppercase">Portofolio</a>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-primary transition-colors">Beranda</a>
+                    <a href="#about" class="text-gray-700 hover:text-primary transition-colors">Tentang Saya</a>
+                    <a href="#portfolio" class="text-gray-700 hover:text-primary transition-colors">Portofolio</a>
+                    <a href="#contact" class="text-gray-700 hover:text-primary transition-colors">Kontak</a>
+                </div>
+                
+                <button id="menu-toggle" class="md:hidden w-10 h-10 flex items-center justify-center text-gray-700">
+                    <i class="ri-menu-line ri-lg"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white w-full">
+                <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                    <a href="#home" class="text-gray-700 hover:text-primary transition-colors">Beranda</a>
+                    <a href="#about" class="text-gray-700 hover:text-primary transition-colors">Tentang Saya</a>
+                    <a href="#portfolio" class="text-gray-700 hover:text-primary transition-colors">Portofolio</a>
+                    <a href="#experience" class="text-gray-700 hover:text-primary transition-colors">Pengalaman</a>
+                    <a href="#contact" class="text-gray-700 hover:text-primary transition-colors">Kontak</a>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Hero Section -->
+        <div class="pt-24 pb-16 md:py-32 bg-gradient-to-br from-blue-50 to-indigo-100">
+            <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 text-center md:text-left mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4">Halo, Saya <span class="text-primary">SAEFFI'I</span></h1>
+                    <div class="h-8">
+                        <p id="typing-text" class="typing-effect text-xl md:text-2xl text-gray-600">Web Developer & UI/UX Designer</p>
+                    </div>
+                    <p class="text-gray-600 mt-6 mb-8 max-w-lg mx-auto md:mx-0">Saya adalah mahasiswa yang tertarik dengan di bidang pengembang Web Developer dan UI/UX Designer.</p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start">
+                        <a href="#contact" class="bg-primary text-white px-6 py-3 !rounded-button font-medium hover:bg-blue-600 transition-colors whitespace-nowrap">Hubungi Saya</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center md:justify-end">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                        <img src="assets/SAEFFII.JPG" alt="Foto Profil" class="w-full h-full object-cover object-top">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800">Tentang Saya</h2>
+            
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-2/5">
+                    <div class="rounded-lg overflow-hidden shadow-lg">
+                        <img src="assets/SAEFFI'I_2303052.png" alt="Foto Informal" class="w-full h-full object-cover object-top">
+                    </div>
+                </div>
+                
+                <div class="md:w-3/5">
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">SAEFFI'I</h3>
+                    <p class="text-gray-600 mb-6">Saya merupakan mahasiswa aktif dari jurusan Teknik Informatika di Politeknik Negeri Indramayu yang memiliki ketertarikan dalam bidang UI/UX dan pengembangan web. Berpengalaman dalam merancang antarmuka pengguna yang menarik dan mudah digunakan, serta mengembangkan website responsif menggunakan HTML, CSS, dan JavaScript, termasuk dengan framework Laravel. Terbiasa menggunakan alat desain seperti Figma untuk mendukung proses desain yang efisien. Selain itu, saya juga memiliki pengalaman dalam membuat proyek IoT sederhana, seperti tempat sampah otomatis menggunakan Arduino Uno.</p>
+                    
+                    <div class="mb-8">
+                        <h4 class="text-xl font-semibold mb-4 text-gray-800">Keahlian Teknis</h4>
+                        <div class="space-y-5">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-700 font-medium">HTML & CSS</span>
+                                    <span class="text-gray-600 font-medium">100%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-blue-500 h-2.5 rounded-full" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-700 font-medium">PHP & Laravel</span>
+                                    <span class="text-gray-600 font-medium">100%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-blue-500 h-2.5 rounded-full" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-700 font-medium">Dart & Flutter</span>
+                                    <span class="text-gray-600 font-medium">90%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-blue-500 h-2.5 rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                        
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-700 font-medium">UI/UX Design</span>
+                                    <span class="text-gray-600 font-medium">100%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-blue-500 h-2.5 rounded-full" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-700 font-medium">Mysql & PL/SQL</span>
+                                    <span class="text-gray-600 font-medium">100%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-blue-500 h-2.5 rounded-full" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4 text-gray-800">Teknologi</h4>
+                        <div class="flex flex-wrap gap-6">
+                            <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-lg">
+                                <i class="ri-html5-fill ri-2x text-orange-500"></i>
+                            </div>
+                            <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-lg">
+                                <i class="ri-css3-fill ri-2x text-blue-500"></i>
+                            </div>
+                            <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-lg">
+                                <i class="ri-javascript-fill ri-2x text-yellow-500"></i>
+                            </div>
+                            <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-lg">
+                                <i class="ri-php-fill ri-2x text-blue-400"></i>
+                            </div>
+                            <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-lg">
+                                <img src="assets/laravel.png" alt="Laravel" class="w-8 h-8 object-contain">
+                            </div>                            
+                            <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-lg">
+                                <i class="ri-flutter-fill ri-2x text-blue-600"></i>
+                            </div>
+                            <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-lg">
+                                <img src="assets/dart.png" alt="Laravel" class="w-15 h-15 object-contain">
+                            </div>  
+                            <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-lg">
+                                <i class="ri-database-2-fill ri-2x text-blue-600"></i>
+                            </div>
+                            <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-lg">
+                                <i class="ri-github-fill ri-2x text-gray-800"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-6 text-gray-800">Portofolio Saya</h2>
+            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-16">Berikut adalah beberapa proyek terbaik yang telah saya kerjakan. Setiap proyek dirancang dengan memperhatikan detail dan kebutuhan klien.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="card-project bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="h-59 overflow-hidden">
+                        <img src="assets/Proyek1.png" alt="Peminjaman dan Pengembalian Buku Berbasis Barcode" class="w-full h-full object-cover object-top">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Website Peminjaman dan Pengembalian Buku</h3>
+                        <p class="text-gray-600 mb-4">Website peminjaman dan pengembalian buku memberikan kemudahan kepada petugas perpustakaan dalam proses transaksi peminjaman dan pengembalian buku sehingga lebih efektif dan lebih efisien.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">PHP</span>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-600 rounded-full text-sm">CSS</span>
+                            <span class="px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm">MYSQL</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm">HTML</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="text-primary hover:text-blue-700 transition-colors flex items-center">
+                                <i class="ri-eye-line ri-fw mr-1"></i> Demo
+                            </a>
+                            <a href="#" class="text-primary hover:text-blue-700 transition-colors flex items-center">
+                                <i class="ri-github-fill ri-fw mr-1"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="card-project bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="h-56 overflow-hidden">
+                    <img src="assets/Proyek3.png" alt="School Management System" class="w-full h-full object-cover object-top">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Sistem Manajemen Sekolah</h3>
+                        <p class="text-gray-600 mb-4">Sistem manajemen sekolah berbasis web untuk memudahkan pengelolaan siswa, guru, kelas, dan nilai dengan dashboard analitik.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm">Vue.js</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">Laravel</span>
+                            <span class="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-sm">MySQL</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="text-primary hover:text-blue-700 transition-colors flex items-center">
+                                <i class="ri-eye-line ri-fw mr-1"></i> Demo
+                            </a>
+                            <a href="#" class="text-primary hover:text-blue-700 transition-colors flex items-center">
+                                <i class="ri-github-fill ri-fw mr-1"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="card-project bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=restaurant%20food%20delivery%20app%20interface%20showing%20Indonesian%20cuisine%20options%2C%20with%20order%20tracking%2C%20payment%20processing%2C%20and%20restaurant%20listings%2C%20modern%20and%20appetizing%20design%20with%20food%20photography%2C%20high%20quality%20UI%2FUX%20design&width=600&height=400&seq=6&orientation=landscape" alt="Food Delivery App" class="w-full h-full object-cover object-top">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Antar Makanan App</h3>
+                        <p class="text-gray-600 mb-4">Aplikasi pengantaran makanan dengan fitur pelacakan real-time, pembayaran online, dan sistem rating untuk restoran dan kurir.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">Flutter</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm">Node.js</span>
+                            <span class="px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm">Firebase</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="text-primary hover:text-blue-700 transition-colors flex items-center">
+                                <i class="ri-eye-line ri-fw mr-1"></i> Demo
+                            </a>
+                            <a href="#" class="text-primary hover:text-blue-700 transition-colors flex items-center">
+                                <i class="ri-github-fill ri-fw mr-1"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="card-project bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=financial%20dashboard%20interface%20with%20budget%20tracking%2C%20expense%20categorization%2C%20and%20savings%20goals%20visualization%2C%20clean%20and%20professional%20design%20with%20charts%20and%20graphs%20showing%20financial%20data%2C%20high%20quality%20UI%2FUX%20design&width=600&height=400&seq=7&orientation=landscape" alt="Financial Dashboard" class="w-full h-full object-cover object-top">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Dashboard Keuangan Pribadi</h3>
+                        <p class="text-gray-600 mb-4">Aplikasi manajemen keuangan pribadi dengan visualisasi pengeluaran, perencanaan anggaran, dan pelacakan investasi.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">React.js</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm">Express.js</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm">Chart.js</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="text-primary hover:text-blue-700 transition-colors flex items-center">
+                                <i class="ri-eye-line ri-fw mr-1"></i> Demo
+                            </a>
+                            <a href="#" class="text-primary hover:text-blue-700 transition-colors flex items-center">
+                                <i class="ri-github-fill ri-fw mr-1"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="card-project bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=online%20learning%20platform%20interface%20showing%20course%20listings%2C%20video%20player%2C%20and%20progress%20tracking%20for%20Indonesian%20educational%20content%2C%20modern%20and%20engaging%20design%20with%20educational%20elements%20and%20user-friendly%20navigation%2C%20high%20quality%20UI%2FUX%20design&width=600&height=400&seq=8&orientation=landscape" alt="E-Learning Platform" class="w-full h-full object-cover object-top">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Platform Belajar Online</h3>
+                        <p class="text-gray-600 mb-4">Platform pembelajaran online dengan fitur kursus video, kuis interaktif, forum diskusi, dan sertifikat penyelesaian.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">Next.js</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm">Django</span>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-600 rounded-full text-sm">PostgreSQL</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="text-primary hover:text-blue-700 transition-colors flex items-center">
+                                <i class="ri-eye-line ri-fw mr-1"></i> Demo
+                            </a>
+                            <a href="#" class="text-primary hover:text-blue-700 transition-colors flex items-center">
+                                <i class="ri-github-fill ri-fw mr-1"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+                
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-6 text-gray-800">Hubungi Saya</h2>
+            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-16">Tertarik untuk bekerja sama? Silakan hubungi saya melalui form di bawah ini atau melalui kontak yang tersedia.</p>
+            
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="lg:w-1/2">
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-gray-700 mb-2">Nama</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary" placeholder="Nama Lengkap" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-gray-700 mb-2">Email</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary" placeholder="email@example.com" required>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-gray-700 mb-2">Subjek</label>
+                            <input type="text" id="subject" name="subject" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary" placeholder="Subjek Pesan" required>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-gray-700 mb-2">Pesan</label>
+                            <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary" placeholder="Tulis pesan Anda di sini..." required></textarea>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <label class="custom-checkbox flex items-center cursor-pointer">
+                                <input type="checkbox" required>
+                                <span class="checkmark mr-3"></span>
+                                <span class="text-gray-700">Saya menyetujui kebijakan privasi</span>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="bg-primary text-white px-6 py-3 !rounded-button font-medium hover:bg-blue-600 transition-colors whitespace-nowrap">Kirim Pesan</button>
+                    </form>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <div class="h-64 md:h-80 mb-8 rounded-lg overflow-hidden shadow-md">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15894.649832332716!2d108.31996698572783!3d-6.318817845005575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sid!4v1714126219470!5m2!1sen!2sid" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-10 rounded-full text-primary mr-4">
+                                <i class="ri-map-pin-line ri-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800 mb-1">Lokasi</h4>
+                                <p class="text-gray-600">Jalan Cimanuk Lama Desa Pagirikan Kecamatan Pasekan, Indramayu, Indonesia</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-10 rounded-full text-primary mr-4">
+                                <i class="ri-mail-line ri-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800 mb-1">Email</h4>
+                                <p class="text-gray-600">saeffii0225@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-10 rounded-full text-primary mr-4">
+                                <i class="ri-phone-line ri-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800 mb-1">Telepon</h4>
+                                <p class="text-gray-600">+62 857 2454 6028</p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4">Media Sosial</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="social-icon w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full text-gray-600">
+                                    <i class="ri-linkedin-fill ri-lg"></i>
+                                </a>
+                                <a href="#" class="social-icon w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full text-gray-600">
+                                    <i class="ri-github-fill ri-lg"></i>
+                                </a>
+                                <a href="#" class="social-icon w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full text-gray-600">
+                                    <i class="ri-twitter-fill ri-lg"></i>
+                                </a>
+                                <a href="#" class="social-icon w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full text-gray-600">
+                                    <i class="ri-instagram-fill ri-lg"></i>
+                                </a>
+                                <a href="#" class="social-icon w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full text-gray-600">
+                                    <i class="ri-dribbble-fill ri-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <a href="#" class="font-['Poppins'] text-2xl text-white mb-4 md:mb-0">Portfolio</a>
+                
+                <div class="flex space-x-6">
+                    <a href="#home" class="text-gray-300 hover:text-white transition-colors">Beranda</a>
+                    <a href="#about" class="text-gray-300 hover:text-white transition-colors">Tentang</a>
+                    <a href="#portfolio" class="text-gray-300 hover:text-white transition-colors">Portofolio</a>
+                    <a href="#experience" class="text-gray-300 hover:text-white transition-colors">Pengalaman</a>
+                    <a href="#contact" class="text-gray-300 hover:text-white transition-colors">Kontak</a>
+                </div>
+            </div>
+            
+            <hr class="border-gray-700 mb-8">
+            
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">&copy; 2025 SAEFFII. Hak Cipta Dilindungi.</p>
+                
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="ri-linkedin-fill ri-lg"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="ri-github-fill ri-lg"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="ri-twitter-fill ri-lg"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="ri-instagram-fill ri-lg"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+        <i class="ri-arrow-up-line ri-lg"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            menuToggle.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Close mobile menu when clicking on a link
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Typing Effect
+            const text = "Web Developer & UI/UX Designer";
+            const typingElement = document.getElementById('typing-text');
+            let i = 0;
+            
+            function typeWriter() {
+                if (i < text.length) {
+                    typingElement.textContent = text.substring(0, i + 1);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
+            }
+            
+            typeWriter();
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Scroll to section smoothly
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Back to Top Button
+            const backToTopButton = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form Validation
+            const contactForm = document.getElementById('contact-form');
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simple validation
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+                
+                if (name && email && subject && message) {
+                    // In a real application, you would send the form data to a server
+                    alert('Terima kasih! Pesan Anda telah dikirim.');
+                    contactForm.reset();
+                } else {
+                    alert('Mohon lengkapi semua field yang diperlukan.');
+                }
+            });
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fade-in animation for timeline items
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
