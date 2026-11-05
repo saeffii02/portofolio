@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portofolio Saeffii - D3 Teknik Informatika, pengembangan web, teknologi, dan proyek IoT.">
+  <meta name="theme-color" content="#123c35">
+  <title>Portofolio | Saeffii</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --green: #176b55;
+      --green-dark: #123c35;
+      --green-soft: #eaf4ef;
+      --ink: #182522;
+      --muted: #64716d;
+      --line: #e5ece8;
+      --surface: #ffffff;
+      --background: #f7faf8;
+      --shadow: 0 18px 50px rgba(18, 60, 53, .09);
+      --radius: 20px;
+      --max-width: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--background);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.7;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .container { width: min(var(--max-width), calc(100% - 40px)); margin-inline: auto; }
+    .section { padding: 92px 0; }
+    .section-white { background: var(--surface); }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--green); background: var(--green-soft);
+      padding: 7px 13px; border-radius: 999px;
+      font-size: .82rem; font-weight: 700; letter-spacing: .03em;
+    }
+    .section-heading { max-width: 680px; margin: 0 auto 48px; text-align: center; }
+    .section-heading h2 {
+      margin: 15px 0 12px; font: 800 clamp(1.8rem, 4vw, 2.55rem)/1.2 Manrope, sans-serif;
+      letter-spacing: -.04em;
+    }
+    .section-heading p { margin: 0; color: var(--muted); }
+    .muted { color: var(--muted); }
+
+    /* Navigasi */
+    .site-header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,.92); backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(229,236,232,.9);
+    }
+    .nav {
+      min-height: 76px; display: flex; align-items: center;
+      justify-content: space-between; gap: 24px;
+    }
+    .brand { font: 800 1.15rem Manrope, sans-serif; letter-spacing: -.04em; }
+    .brand span { color: var(--green); }
+    .nav-links { display: flex; align-items: center; gap: 30px; }
+    .nav-links a { color: #53615c; font-size: .94rem; font-weight: 600; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--green); }
+    .nav-cta, .button {
+      display: inline-flex; justify-content: center; align-items: center; gap: 9px;
+      border: 0; border-radius: 999px; padding: 12px 19px;
+      background: var(--green); color: white; font-weight: 700;
+      cursor: pointer; transition: transform .2s, background .2s, box-shadow .2s;
+    }
+    .nav-cta:hover, .button:hover { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 9px 20px rgba(23,107,85,.18); }
+    .menu-toggle {
+      display: none; width: 42px; height: 42px; border: 1px solid var(--line);
+      background: white; border-radius: 12px; color: var(--ink); font-size: 1.35rem;
+    }
+
+    /* Hero */
+    .hero {
+      overflow: hidden; position: relative;
+      background: radial-gradient(circle at 80% 15%, #dcefe5 0, transparent 32%),
+                  linear-gradient(135deg, #f7faf8 0%, #edf5f0 100%);
+      padding: 84px 0 90px;
+    }
+    .hero::after {
+      content: ""; position: absolute; width: 340px; height: 340px; border: 1px solid rgba(23,107,85,.12);
+      border-radius: 50%; right: -130px; bottom: -190px;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.2fr .8fr; align-items: center; gap: 65px; position: relative; z-index: 1; }
+    .hero h1 {
+      margin: 20px 0 12px; font: 800 clamp(2.5rem, 6vw, 4.6rem)/1.08 Manrope, sans-serif;
+      letter-spacing: -.065em;
+    }
+    .hero h1 span { color: var(--green); }
+    .hero-role { color: var(--green-dark); font-weight: 700; font-size: clamp(1.05rem, 2vw, 1.35rem); min-height: 34px; }
+    .hero-copy { max-width: 620px; color: var(--muted); font-size: 1.05rem; margin: 20px 0 28px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .button-outline { color: var(--green); background: white; border: 1px solid #cfe0d7; }
+    .button-outline:hover { color: white; }
+    .hero-photo-wrap { display: flex; justify-content: center; }
+    .hero-photo {
+      width: min(330px, 80vw); aspect-ratio: 1; object-fit: cover; object-position: center 25%;
+      border-radius: 25% 25%; border: 6px solid white; box-shadow: var(--shadow);
+      background: #dce9e1;
+    }
+    .hero-note {
+      margin-top: 18px; display: flex; justify-content: center; gap: 8px; color: var(--muted);
+      font-size: .88rem;
+    }
+
+    /* Tentang dan info */
+    .about-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 55px; align-items: start; }
+    .about-card {
+      padding: 30px; border: 1px solid var(--line); border-radius: var(--radius);
+      background: white; box-shadow: 0 10px 30px rgba(18,60,53,.04);
+    }
+    .about-card h3 { margin: 0 0 8px; font: 800 1.35rem Manrope, sans-serif; }
+    .about-card p { margin: 0; color: var(--muted); }
+    .quick-facts { display: grid; gap: 16px; margin-top: 24px; }
+    .fact { display: flex; gap: 13px; align-items: flex-start; }
+    .fact-icon {
+      flex: 0 0 40px; width: 40px; height: 40px; display: grid; place-items: center;
+      border-radius: 12px; background: var(--green-soft); color: var(--green); font-size: 1.15rem;
+    }
+    .fact strong { display: block; font-size: .92rem; }
+    .fact span { color: var(--muted); font-size: .9rem; }
+    .about-content h3 { margin: 0 0 14px; font: 800 1.5rem Manrope, sans-serif; }
+    .about-content > p { color: var(--muted); margin: 0 0 22px; }
+    .skill-groups { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 22px; }
+    .skill-group { border: 1px solid var(--line); background: #fff; border-radius: 15px; padding: 18px; }
+    .skill-group h4 { margin: 0 0 10px; font-size: .95rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      display: inline-flex; padding: 6px 10px; border-radius: 8px;
+      background: var(--green-soft); color: #245b49; font-size: .82rem; font-weight: 600;
+    }
+
+    /* Proyek */
+    .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .project-card {
+      overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius);
+      background: white; transition: transform .25s, box-shadow .25s;
+    }
+    .project-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .project-image {
+      width: 100%; height: 410px; object-fit: cover; background: #e9f0ec;
+    }
+    .project-body { padding: 25px; }
+    .project-type { color: var(--green); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+    .project-body h3 { margin: 8px 0 10px; font: 800 1.2rem/1.35 Manrope, sans-serif; }
+    .project-body p { margin: 0 0 17px; color: var(--muted); font-size: .94rem; }
+    .project-tech { display: flex; flex-wrap: wrap; gap: 7px; }
+    .project-tech span { padding: 5px 9px; border-radius: 7px; background: #f0f4f1; color: #52615a; font-size: .78rem; font-weight: 600; }
+
+    /* Pengalaman */
+    .experience-wrap { max-width: 820px; margin: auto; }
+    .experience-item {
+      display: grid; grid-template-columns: 52px 1fr; gap: 20px;
+      padding: 0 0 34px; position: relative;
+    }
+    .experience-item:not(:last-child)::before {
+      content: ""; position: absolute; top: 48px; bottom: 0; left: 24px; width: 2px; background: var(--line);
+    }
+    .experience-icon {
+      width: 50px; height: 50px; border-radius: 15px; display: grid; place-items: center;
+      color: var(--green); background: var(--green-soft); font-size: 1.35rem; position: relative; z-index: 1;
+    }
+    .experience-content { padding: 4px 0 0; }
+    .experience-content h3 { margin: 0; font: 800 1.15rem Manrope, sans-serif; }
+    .experience-meta { color: var(--green); font-size: .9rem; font-weight: 700; margin: 4px 0 10px; }
+    .experience-content p, .experience-content li { color: var(--muted); font-size: .94rem; }
+    .experience-content ul { padding-left: 20px; margin: 8px 0 0; }
+
+    /* Relevansi posisi */
+    .relevance-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .relevance-card { background: white; border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+    .relevance-card h3 { margin: 10px 0; font: 800 1.15rem Manrope, sans-serif; }
+    .relevance-card p { margin: 0; color: var(--muted); font-size: .94rem; }
+    .relevance-card > i { color: var(--green); font-size: 1.6rem; }
+
+    /* Kontak */
+    .contact-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 35px; align-items: start; }
+    .contact-panel { background: var(--green-dark); color: white; border-radius: var(--radius); padding: 30px; }
+    .contact-panel h3 { margin: 0 0 10px; font: 800 1.45rem Manrope, sans-serif; }
+    .contact-panel > p { color: #c8d9d2; margin: 0 0 25px; }
+    .contact-line { display: flex; gap: 13px; align-items: center; margin: 17px 0; color: #edf5f1; }
+    .contact-line i { color: #a9d5c1; font-size: 1.2rem; }
+    .social-links { display: flex; gap: 10px; margin-top: 25px; }
+    .social-links a { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: rgba(255,255,255,.12); font-size: 1.15rem; transition: background .2s; }
+    .social-links a:hover { background: var(--green); }
+    .contact-form { padding: 30px; border: 1px solid var(--line); background: white; border-radius: var(--radius); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .field { margin-bottom: 17px; }
+    .field label { display: block; margin-bottom: 7px; font-weight: 700; font-size: .9rem; }
+    .field input, .field textarea {
+      width: 100%; border: 1px solid #dce5df; border-radius: 11px; padding: 12px 14px;
+      color: var(--ink); background: #fbfdfb; outline: none; transition: border .2s, box-shadow .2s;
+    }
+    .field textarea { resize: vertical; min-height: 130px; }
+    .field input:focus, .field textarea:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(23,107,85,.1); }
+    .form-note { color: var(--muted); font-size: .82rem; margin: 12px 0 0; }
+
+    footer { padding: 27px 0; background: #0d2d28; color: #d2e0da; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+    .footer-inner p { margin: 0; font-size: .88rem; }
+    .back-top {
+      position: fixed; right: 22px; bottom: 22px; z-index: 90; width: 46px; height: 46px;
+      border: 0; border-radius: 14px; background: var(--green); color: white; font-size: 1.25rem;
+      box-shadow: var(--shadow); cursor: pointer; opacity: 0; visibility: hidden; transform: translateY(8px);
+      transition: .2s;
+    }
+    .back-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 800px) {
+      .nav-links {
+        display: none; position: absolute; top: 76px; left: 0; right: 0; padding: 18px 22px 22px;
+        background: white; border-bottom: 1px solid var(--line); box-shadow: 0 15px 25px rgba(0,0,0,.05);
+        flex-direction: column; align-items: stretch; gap: 0;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 11px 0; }
+      .nav-cta { display: none; }
+      .menu-toggle { display: grid; place-items: center; }
+      .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .hero-grid { gap: 38px; text-align: center; }
+      .hero-copy { margin-inline: auto; }
+      .hero-actions { justify-content: center; }
+      .hero-photo-wrap { grid-row: 1; }
+      .hero-photo { width: min(260px, 70vw); }
+      .about-grid { gap: 28px; }
+      .about-card { max-width: 600px; }
+      .contact-grid { gap: 22px; }
+    }
+    @media (max-width: 600px) {
+      .container { width: min(100% - 30px, var(--max-width)); }
+      .section { padding: 70px 0; }
+      .hero { padding: 55px 0 65px; }
+      .project-grid, .relevance-grid, .skill-groups, .form-row { grid-template-columns: 1fr; }
+      .project-image { height: 205px; }
+      .project-body, .contact-panel, .contact-form { padding: 22px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .experience-item { grid-template-columns: 42px 1fr; gap: 14px; }
+      .experience-icon { width: 42px; height: 42px; }
+      .experience-item:not(:last-child)::before { left: 20px; top: 42px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header" id="home">
+    <div class="container nav">
+      <a class="brand" href="#home">PORTOFOLIO<span>.</span></a>
+      <nav class="nav-links" id="nav-links" aria-label="Navigasi utama">
+        <a href="#home">Beranda</a>
+        <a href="#about">Tentang</a>
+        <a href="#projects">Proyek</a>
+        <a href="#experience">Pengalaman</a>
+        <a href="#contact">Kontak</a>
+      </nav>
+      <a class="nav-cta" href="#contact">Hubungi Saya <i class="ri-arrow-right-up-line"></i></a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Buka menu" aria-expanded="false">
+        <i class="ri-menu-line"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <h1>Halo, saya <span>Saeffii</span></h1>
+          <div class="hero-role"><span id="typing-text">Lulusan D3 Teknik Informatika</span></div>
+          <p class="hero-copy">
+            Lulusan D3 Teknik Informatika yang memiliki minat pada teknologi, pengembangan sistem,
+            dan pekerjaan teknis. Memiliki pengalaman magang di bidang pengembangan perangkat lunak
+            serta pengalaman mengembangkan proyek berbasis web dan Internet of Things (IoT).
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="#projects">Lihat Proyek <i class="ri-arrow-down-line"></i></a>
+            <a class="button button-outline" href="#contact"><i class="ri-mail-line"></i> Hubungi Saya</a>
+          </div>
+        </div>
+        <div class="hero-photo-wrap">
+          <img class="hero-photo" src="assets/Saeffi'i.jpg" alt="Foto profil Saeffii"
+               onerror="this.onerror=null;this.src='https://placehold.co/600x600/eaf4ef/176b55?text=Foto+Saeffii';">
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-white" id="about">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Profil Singkat</span>
+          <h2>Tentang Saya</h2>
+          <p>Latar belakang pendidikan, pengalaman, dan kompetensi yang saya kembangkan.</p>
+        </div>
+        <div class="about-grid">
+          <aside class="about-card reveal">
+            <h3>Saeffi'i</h3>
+            <p>Lulusan D3 Teknik Informatika dengan ketertarikan pada teknologi informasi, pekerjaan teknis, dan pengembangan solusi digital.</p>
+            <div class="quick-facts">
+              <div class="fact"><div class="fact-icon"><i class="ri-graduation-cap-line"></i></div><div><strong>Pendidikan</strong><span>D3 Teknik Informatika</span></div></div>
+              <div class="fact"><div class="fact-icon"><i class="ri-building-2-line"></i></div><div><strong>Perguruan Tinggi</strong><span>Politeknik Negeri Indramayu</span></div></div>
+              <div class="fact"><div class="fact-icon"><i class="ri-map-pin-line"></i></div><div><strong>Domisili</strong><span>Indramayu, Jawa Barat</span></div></div>
+              <div class="fact"><div class="fact-icon"><i class="ri-briefcase-3-line"></i></div><div><strong>Minat Karier</strong><span>Teknologi, teknisi, dan operasional lapangan</span></div></div>
+            </div>
+          </aside>
+
+          <div class="about-content reveal">
+            <h3>Kompetensi dan Keahlian</h3>
+            <p>
+              Selama menempuh pendidikan dan mengerjakan proyek, saya terbiasa melakukan analisis
+              kebutuhan, menyusun solusi, mengembangkan aplikasi, mengelola data, serta melakukan
+              pengujian. Saya juga memiliki pengalaman mengintegrasikan perangkat mikrokontroler
+              dengan sistem pemantauan berbasis web.
+            </p>
+            <div class="skill-groups">
+              <div class="skill-group">
+                <h4><i class="ri-code-s-slash-line"></i> Pengembangan</h4>
+                <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">PHP</span><span class="tag">Laravel</span><span class="tag">React</span><span class="tag">Flutter</span></div>
+              </div>
+              <div class="skill-group">
+                <h4><i class="ri-cpu-line"></i> Teknologi & IoT</h4>
+                <div class="tags"><span class="tag">ESP32</span><span class="tag">Arduino</span><span class="tag">Sensor DHT22</span><span class="tag">MQTT</span><span class="tag">Relay</span><span class="tag">C++</span></div>
+              </div>
+              <div class="skill-group">
+                <h4><i class="ri-database-2-line"></i> Data & Database</h4>
+                <div class="tags"><span class="tag">Microsoft Excel</span><span class="tag">MySQL</span><span class="tag">PostgreSQL</span></div>
+              </div>
+              <div class="skill-group">
+                <h4><i class="ri-tools-line"></i> Kompetensi Pendukung</h4>
+                <div class="tags"><span class="tag">Problem Solving</span><span class="tag">Analisis Kebutuhan</span><span class="tag">Pengujian Sistem</span><span class="tag">Dokumentasi</span><span class="tag">Figma</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Karya & Implementasi</span>
+          <h2>Proyek Pilihan</h2>
+          <p>Beberapa proyek yang menggambarkan pengalaman saya dalam pengembangan aplikasi dan penerapan teknologi.</p>
+        </div>
+        <div class="project-grid">
+          <article class="project-card reveal">
+            <img class="project-image" src="assets/Proyek1.png" alt="Sistem peminjaman dan pengembalian buku"
+                 onerror="this.onerror=null;this.src='https://placehold.co/900x500/eaf4ef/176b55?text=Website+Perpustakaan';">
+            <div class="project-body">
+              <span class="project-type">Web Development</span>
+              <h3>Sistem Peminjaman dan Pengembalian Buku</h3>
+              <p>Aplikasi berbasis web untuk membantu petugas perpustakaan mengelola transaksi peminjaman dan pengembalian buku, termasuk penggunaan barcode untuk mendukung proses pencatatan.</p>
+              <div class="project-tech"><span>PHP</span><span>MySQL</span><span>HTML</span><span>CSS</span></div>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <img class="project-image" src="assets/Proyek2.png" alt="Sistem pelayanan Zahra Cake"
+                 onerror="this.onerror=null;this.src='https://placehold.co/900x500/eaf4ef/176b55?text=Zahra+Cake';">
+            <div class="project-body">
+              <span class="project-type">Web Development</span>
+              <h3>Sistem Pelayanan Zahra Cake</h3>
+              <p>Sistem pelayanan pemesanan kue berbasis web untuk membantu pengelolaan produk, pemesanan, dan penjualan melalui antarmuka admin dan pengguna.</p>
+              <div class="project-tech"><span>PHP</span><span>Laravel</span><span>JavaScript</span><span>MySQL</span></div>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <img class="project-image" src="assets/Proyek 3.png" alt="Aplikasi mobile BIMKO"
+                 onerror="this.onerror=null;this.src='https://placehold.co/900x500/eaf4ef/176b55?text=Aplikasi+BIMKO';">
+            <div class="project-body">
+              <span class="project-type">Mobile Development</span>
+              <h3>BIMKO – Aplikasi Bimbingan dan Konseling</h3>
+              <p>Aplikasi mobile untuk mendukung layanan bimbingan dan konseling di SMA Negeri 1 Sindang, dengan fitur reservasi konseling, materi edukatif, dan komunikasi daring.</p>
+              <div class="project-tech"><span>Flutter</span><span>Dart</span><span>Firebase</span></div>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <img class="project-image" src="assets/Proyek-IoT-Tempe.png" alt="Perangkat IoT pemantauan fermentasi tempe"
+                 onerror="this.onerror=null;this.src='https://placehold.co/900x500/eaf4ef/176b55?text=IoT+Fermentasi+Tempe';">
+            <div class="project-body">
+              <span class="project-type">Web Development</span>
+              <h3>SIDARGA Pemkab Subang (Sistem Informasi Standar Harga)</h3>
+              <p>Proyek tugas akhir berupa sistem pemantauan suhu dan kelembapan menggunakan ESP32 dan sensor DHT22, terintegrasi dengan dashboard web serta kendali aktuator untuk mendukung proses fermentasi.</p>
+              <div class="project-tech"><span>react</span><span>Node.js</span><span>PostgeSql</span></div>
+            </div>
+          </article>
+
+           <article class="project-card reveal">
+            <img class="project-image" src="assets/Proyek-IoT-Tempe.png" alt="Perangkat IoT pemantauan fermentasi tempe"
+                 onerror="this.onerror=null;this.src='https://placehold.co/900x500/eaf4ef/176b55?text=IoT+Fermentasi+Tempe';">
+            <div class="project-body">
+              <span class="project-type">Internet of Things</span>
+              <h3>Platform Manajemen Fermentasi Tempe Berbasis IoT</h3>
+              <p>Proyek tugas akhir berupa sistem pemantauan suhu dan kelembapan menggunakan ESP32 dan sensor DHT22, terintegrasi dengan dashboard web serta kendali aktuator untuk mendukung proses fermentasi.</p>
+              <div class="project-tech"><span>ESP32</span><span>DHT22</span><span>MQTT</span><span>Node.js</span><span>C++</span><span>PosgreSql</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-white" id="experience">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Perjalanan Profesional</span>
+          <h2>Pengalaman & Pendidikan</h2>
+          <p>Pengalaman belajar dan praktik yang mendukung pengembangan kompetensi profesional.</p>
+        </div>
+        <div class="experience-wrap">
+          <article class="experience-item reveal">
+            <div class="experience-icon"><i class="ri-code-box-line"></i></div>
+            <div class="experience-content">
+              <h3>Software Engineer Intern</h3>
+              <div class="experience-meta">PT Pratama Solusi Teknologi (PST)</div>
+              <p>Melaksanakan kegiatan magang di bidang pengembangan perangkat lunak, khususnya pengembangan antarmuka aplikasi web dan mobile.</p>
+              <ul>
+                <li>Mengembangkan bagian frontend website company profile.</li>
+                <li>Membangun website Sidarga (sistem standar harga) Kabupaten Subang</li>
+                <li>Mempelajari dan menerapkan pengembangan aplikasi mobile menggunakan Kotlin.</li>
+                <li>Berkolaborasi dengan tim dalam proses pengembangan dan penyesuaian fitur.</li>
+              </ul>
+            </div>
+          </article>
+          <article class="experience-item reveal">
+            <div class="experience-icon"><i class="ri-graduation-cap-line"></i></div>
+            <div class="experience-content">
+              <h3>D3 Teknik Informatika</h3>
+              <div class="experience-meta">Politeknik Negeri Indramayu</div>
+              <p>Mempelajari dasar-dasar teknologi informasi, pemrograman, basis data, analisis dan perancangan sistem, serta pengembangan aplikasi. Menyelesaikan tugas akhir berupa platform manajemen UMKM tempe berbasis Internet of Things (IoT).</p>
+            </div>
+          </article>
+          <article class="experience-item reveal">
+            <div class="experience-icon"><i class="ri-award-line"></i></div>
+            <div class="experience-content">
+              <h3>Pelatihan dan Sertifikasi Maritim</h3>
+              <div class="experience-meta">AFF · SAT · SDSD · BST</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="relevance">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Arah Pengembangan Karier</span>
+          <h2>Kompetensi untuk Posisi Teknis</h2>
+          <p>Pengalaman dan kemampuan yang dapat menjadi bekal untuk mempelajari tanggung jawab pekerjaan teknis.</p>
+        </div>
+        <div class="relevance-grid">
+          <article class="relevance-card reveal">
+            <i class="ri-router-line"></i>
+            <h3>Teknisi Lapangan / Teknisi Jaringan</h3>
+            <p>Dasar Teknik Informatika, pemahaman perangkat komputer dan jaringan, pengalaman perangkat IoT, kemampuan analisis masalah, serta kemauan untuk belajar prosedur instalasi dan pemeliharaan di lapangan.</p>
+          </article>
+          <article class="relevance-card reveal">
+            <i class="ri-map-2-line"></i>
+            <h3>Survei & Pemetaan</h3>
+            <p>Latar belakang teknologi informasi, pengolahan data, ketelitian, dokumentasi, dan kemampuan menggunakan perangkat digital. Kompetensi teknis survei/pemetaan perlu dikembangkan melalui pelatihan dan praktik sesuai kebutuhan posisi.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-white" id="contact">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Mari Terhubung</span>
+          <h2>Hubungi Saya</h2>
+          <p>Silakan hubungi saya untuk informasi lebih lanjut, kesempatan kerja, atau kolaborasi.</p>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-panel reveal">
+            <h3>Terima kasih telah mengunjungi portofolio saya.</h3>
+            <p>Saya terbuka untuk kesempatan kerja, magang, dan pengembangan pengalaman profesional.</p>
+            <div class="contact-line"><i class="ri-mail-line"></i><a href="mailto:saeffii0225@gmail.com">saeffii0225@gmail.com</a></div>
+            <div class="contact-line"><i class="ri-phone-line"></i><a href="tel:+6285724546028">+62 857 2454 6028</a></div>
+            <div class="contact-line"><i class="ri-map-pin-line"></i><span>Indramayu, Jawa Barat, Indonesia</span></div>
+            <div class="social-links">
+              <!-- Ganti tanda # dengan URL profil media sosial milik Anda -->
+              <a href="#" aria-label="LinkedIn"><i class="ri-linkedin-fill"></i></a>
+              <a href="#" aria-label="GitHub"><i class="ri-github-fill"></i></a>
+              <a href="#" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+            </div>
+          </div>
+
+          <form class="contact-form reveal" id="contact-form">
+            <div class="form-row">
+              <div class="field">
+                <label for="name">Nama</label>
+                <input id="name" name="name" type="text" placeholder="Nama lengkap" required>
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="nama@email.com" required>
+              </div>
+            </div>
+            <div class="field">
+              <label for="subject">Subjek</label>
+              <input id="subject" name="subject" type="text" placeholder="Subjek pesan" required>
+            </div>
+            <div class="field">
+              <label for="message">Pesan</label>
+              <textarea id="message" name="message" placeholder="Tulis pesan Anda..." required></textarea>
+            </div>
+            <button class="button" type="submit">Kirim melalui Email <i class="ri-send-plane-line"></i></button>
+            <p class="form-note">Tombol ini akan membuka aplikasi email Anda dengan pesan yang sudah disiapkan. Formulir tidak mengirim data ke server.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Saeffii. Seluruh hak cipta dilindungi.</p>
+    </div>
+  </footer>
+
+  <button class="back-top" id="back-top" aria-label="Kembali ke atas"><i class="ri-arrow-up-line"></i></button>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const menuToggle = document.getElementById("menu-toggle");
+      const navLinks = document.getElementById("nav-links");
+      const backTop = document.getElementById("back-top");
+      const contactForm = document.getElementById("contact-form");
+
+      // Menu navigasi untuk perangkat mobile
+      menuToggle.addEventListener("click", () => {
+        const isOpen = navLinks.classList.toggle("open");
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+        menuToggle.innerHTML = isOpen
+          ? '<i class="ri-close-line"></i>'
+          : '<i class="ri-menu-line"></i>';
+      });
+
+      navLinks.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+          navLinks.classList.remove("open");
+          menuToggle.setAttribute("aria-expanded", "false");
+          menuToggle.innerHTML = '<i class="ri-menu-line"></i>';
+        });
+      });
+
+      // Tombol kembali ke atas
+      const updateBackTop = () => {
+        backTop.classList.toggle("show", window.scrollY > 350);
+      };
+      window.addEventListener("scroll", updateBackTop, { passive: true });
+      updateBackTop();
+      backTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      // Tahun footer otomatis
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Animasi elemen ketika masuk ke area layar
+      const revealElements = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        revealElements.forEach(element => observer.observe(element));
+      } else {
+        revealElements.forEach(element => element.classList.add("visible"));
+      }
+
+      // Form kontak menyiapkan email melalui aplikasi email pengguna
+      contactForm.addEventListener("submit", event => {
+        event.preventDefault();
+        if (!contactForm.reportValidity()) return;
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const subject = document.getElementById("subject").value.trim();
+        const message = document.getElementById("message").value.trim();
+
+        const body = `Nama: ${name}\nEmail: ${email}\n\n${message}`;
+        const mailto = `mailto:saeffii0225@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailto;
+      });
+    });
+  </script>
+</body>
+</html>
